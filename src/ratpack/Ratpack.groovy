@@ -8,9 +8,11 @@ import static ratpack.groovy.Groovy.ratpack
 ratpack {
   bindings {
     module MarkupTemplateModule
-    ConfigData configData = ConfigData.of().sysProps().build()
-    moduleConfig(new AssetPipelineModule(), configData.get(AssetPipelineModule.Config))
-
+    module(AssetPipelineModule) {
+        println it.dump()
+        it.url("/")
+        it.sourcePath("../../../src/assets") // FIXME: With this, it works with ./gradlew run - but not with shadowJar
+    }
   }
 
   handlers {
